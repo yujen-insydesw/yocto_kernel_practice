@@ -173,7 +173,7 @@ EXTRA_OECMAKE = ""
 CMakeLists.txt
 ```
 cmake_minimum_required(VERSION 3.10)
-project(HelloCmake)
+project(hellocmake)
 
 # Specify the C++ standard
 set(CMAKE_CXX_STANDARD 11)
@@ -190,7 +190,7 @@ set(SOURCE
 include_directories(${INCLUDE})
 
 # Add the executable
-add_executable(HelloCmake ${SOURCE})
+add_executable(hellocmake ${SOURCE})
 ```
 
 ### Building the system image
