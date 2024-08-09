@@ -201,30 +201,31 @@ When you boot your image, under ```/.../``` should have executable.
 
 ```
 
-#ifndef MY_HEADER_H
-#define MY_HEADER_H
+#ifndef ECHO_H
+#define ECHO_H
 
-void myFunction();
+void hello_world();
 
-#endif // MY_HEADER_H
+#endif // ECHO_H
 
 
+echo.cpp
 
-#include "my_header.h"
+#include "echo.h"
 #include <iostream>
 
-void myFunction() {
+void hello_world() {
     std::cout << "Hello from myFunction!" << std::endl;
 }
 
 
 
+hello.cpp
 
-
-#include "my_header.h"
+#include "echo.h"
 
 int main() {
-    myFunction();
+    hello_world();
     return 0;
 }
 
