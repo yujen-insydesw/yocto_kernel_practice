@@ -199,7 +199,7 @@ When you boot your image, under ```/.../``` should have executable.
 
 
 
-
+```
 
 #ifndef MY_HEADER_H
 #define MY_HEADER_H
@@ -228,3 +228,4 @@ int main() {
     return 0;
 }
 
+```
