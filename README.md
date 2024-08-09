@@ -7,6 +7,19 @@ Create a new layer named meta-*
 
 ```
 $ bitbake-layers create-layer meta-application
+
+$ bitbake-layers add-layer meta-application
+
+ntc2@insydesc2:/media/disk4T/yujen/poky/build$ bitbake-layers show-layers
+/usr/lib/python3/dist-packages/html5lib/_trie/_base.py:3: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.9 it will stop working
+  from collections import Mapping
+NOTE: Starting bitbake server...
+layer                 path                                      priority
+==========================================================================
+meta                  /media/disk4T/yujen/poky/meta             5
+meta-poky             /media/disk4T/yujen/poky/meta-poky        5
+meta-yocto-bsp        /media/disk4T/yujen/poky/meta-yocto-bsp   5
+meta-application      /media/disk4T/yujen/poky/build/meta-application  6
 ```
 
 BitBake should've created the following tree (with additional recipe-example):
