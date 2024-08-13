@@ -1,0 +1,296 @@
+diff --git a/meta-application/COPYING.MIT b/meta-application/COPYING.MIT
+new file mode 100644
+index 0000000000..fb950dc69f
+--- /dev/null
++++ b/meta-application/COPYING.MIT
+@@ -0,0 +1,17 @@
++Permission is hereby granted, free of charge, to any person obtaining a copy 
++of this software and associated documentation files (the "Software"), to deal 
++in the Software without restriction, including without limitation the rights 
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
++copies of the Software, and to permit persons to whom the Software is 
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in 
++all copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
++THE SOFTWARE.
+diff --git a/meta-application/README b/meta-application/README
+new file mode 100644
+index 0000000000..034591b2a0
+--- /dev/null
++++ b/meta-application/README
+@@ -0,0 +1,41 @@
++This README file contains information on the contents of the meta-application layer.
++
++Please see the corresponding sections below for details.
++
++Dependencies
++============
++
++  URI: <first dependency>
++  branch: <branch name>
++
++  URI: <second dependency>
++  branch: <branch name>
++
++  .
++  .
++  .
++
++Patches
++=======
++
++Please submit any patches against the meta-application layer to the xxxx mailing list (xxxx@zzzz.org)
++and cc: the maintainer:
++
++Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
++
++Table of Contents
++=================
++
++  I. Adding the meta-application layer to your build
++ II. Misc
++
++
++I. Adding the meta-application layer to your build
++=================================================
++
++Run 'bitbake-layers add-layer meta-application'
++
++II. Misc
++========
++
++--- replace with specific information about the meta-application layer ---
+diff --git a/meta-application/conf/layer.conf b/meta-application/conf/layer.conf
+new file mode 100644
+index 0000000000..2dd9afdf30
+--- /dev/null
++++ b/meta-application/conf/layer.conf
+@@ -0,0 +1,13 @@
++# We have a conf and classes directory, add to BBPATH
++BBPATH .= ":${LAYERDIR}"
++
++# We have recipes-* directories, add to BBFILES
++BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
++            ${LAYERDIR}/recipes-*/*/*.bbappend"
++
++BBFILE_COLLECTIONS += "meta-application"
++BBFILE_PATTERN_meta-application = "^${LAYERDIR}/"
++BBFILE_PRIORITY_meta-application = "6"
++
++LAYERDEPENDS_meta-application = "core"
++LAYERSERIES_COMPAT_meta-application = "kirkstone"
+diff --git a/meta-application/recipes-hello/files/CMakeLists.txt b/meta-application/recipes-hello/files/CMakeLists.txt
+new file mode 100644
+index 0000000000..e714f24247
+--- /dev/null
++++ b/meta-application/recipes-hello/files/CMakeLists.txt
+@@ -0,0 +1,23 @@
++cmake_minimum_required(VERSION 3.10)
++project(hellocmake)
++
++# Specify the C++ standard
++set(CMAKE_CXX_STANDARD 11)
++set(CMAKE_CXX_STANDARD_REQUIRED True)
++
++# Specify path
++set(INCLUDE include)
++set(SOURCE
++	source/echo.cpp
++	source/hello.cpp
++)
++
++# Include directories
++include_directories(${INCLUDE})
++
++# Add the executable
++add_executable(hellocmake ${SOURCE})
++
++# Install
++install(TARGETS hellocmake RUNTIME DESTINATION bin)
++
+diff --git a/meta-application/recipes-hello/files/Makefile b/meta-application/recipes-hello/files/Makefile
+new file mode 100644
+index 0000000000..c38f4595a0
+--- /dev/null
++++ b/meta-application/recipes-hello/files/Makefile
+@@ -0,0 +1,19 @@
++# Compiler
++CXX = g++
++CXXFLAGS = -Iinclude -std=c++11
++
++#Source files
++SOURCE = source/echo.cpp source/hello.cpp
++
++# Output executable
++TARGET = hellomake
++
++# Build rule
++all: $(TARGET)
++
++$(TARGET): $(SOURCE)
++	$(CXX) $(CXXFLAGS) -o $@ $^
++
++# Clean rule
++clean:
++	rm -f $(TARGET)
+diff --git a/meta-application/recipes-hello/files/files b/meta-application/recipes-hello/files/files
+new file mode 120000
+index 0000000000..feb122881c
+--- /dev/null
++++ b/meta-application/recipes-hello/files/files
+@@ -0,0 +1 @@
++../files
+\ No newline at end of file
+diff --git a/meta-application/recipes-hello/files/include/echo.h b/meta-application/recipes-hello/files/include/echo.h
+new file mode 100644
+index 0000000000..ec7a160609
+--- /dev/null
++++ b/meta-application/recipes-hello/files/include/echo.h
+@@ -0,0 +1,6 @@
++#ifndef ECHO_H
++#define ECHO_H
++
++void hello_world();
++
++#endif // ECHO_H
+diff --git a/meta-application/recipes-hello/files/source/echo.cpp b/meta-application/recipes-hello/files/source/echo.cpp
+new file mode 100644
+index 0000000000..f7ef740b51
+--- /dev/null
++++ b/meta-application/recipes-hello/files/source/echo.cpp
+@@ -0,0 +1,6 @@
++#include "echo.h"
++#include <iostream>
++
++void hello_world() {
++	std::cout << "Hello World !" << std::endl;
++}
+diff --git a/meta-application/recipes-hello/files/source/hello.cpp b/meta-application/recipes-hello/files/source/hello.cpp
+new file mode 100644
+index 0000000000..6a8ed689b2
+--- /dev/null
++++ b/meta-application/recipes-hello/files/source/hello.cpp
+@@ -0,0 +1,6 @@
++#include "echo.h"
++
++int main() {
++	hello_world();
++	return 0;
++}
+diff --git a/meta-application/recipes-hello/hello/files b/meta-application/recipes-hello/hello/files
+new file mode 120000
+index 0000000000..feb122881c
+--- /dev/null
++++ b/meta-application/recipes-hello/hello/files
+@@ -0,0 +1 @@
++../files
+\ No newline at end of file
+diff --git a/meta-application/recipes-hello/hello/hello.bb b/meta-application/recipes-hello/hello/hello.bb
+new file mode 100644
+index 0000000000..cb0193086a
+--- /dev/null
++++ b/meta-application/recipes-hello/hello/hello.bb
+@@ -0,0 +1,25 @@
++UMMARY = "Simple Hello World application"
++LICENSE = "MIT"
++LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
++
++#SRC_URI = "file://../ "
++SRC_URI = "file://include/echo.h \
++           file://source/echo.cpp \
++           file://source/hello.cpp \
++          "
++
++INCLUDE = "include"
++SOURCE = "source/echo.cpp source/hello.cpp"
++
++# ld flag can also set here TARGET_CC_ARCH += "${LDFLAGS}" 
++
++S = "${WORKDIR}"
++
++do_compile() {
++  ${CXX} ${SOURCE} -I ${INCLUDE} ${LDFLAGS} -o hello
++}
++
++do_install() {
++  install -d ${D}${bindir}
++  install -m 0755 hello ${D}${bindir}
++}
+diff --git a/meta-application/recipes-hello/hellocmake/files b/meta-application/recipes-hello/hellocmake/files
+new file mode 120000
+index 0000000000..feb122881c
+--- /dev/null
++++ b/meta-application/recipes-hello/hellocmake/files
+@@ -0,0 +1 @@
++../files
+\ No newline at end of file
+diff --git a/meta-application/recipes-hello/hellocmake/hellocmake.bb b/meta-application/recipes-hello/hellocmake/hellocmake.bb
+new file mode 100644
+index 0000000000..842ef5fd66
+--- /dev/null
++++ b/meta-application/recipes-hello/hellocmake/hellocmake.bb
+@@ -0,0 +1,16 @@
++SUMMARY = "Simple Hello World application"
++LICENSE = "MIT"
++LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
++
++#SRC_URI = "file://* "
++SRC_URI = "file://CMakeLists.txt \
++           file://include/echo.h \
++           file://source/echo.cpp \
++           file://source/hello.cpp \
++          "
++
++S = "${WORKDIR}"
++
++inherit cmake
++
++EXTRA_OECMAKE = ""
+diff --git a/meta-application/recipes-hello/hellomake/files b/meta-application/recipes-hello/hellomake/files
+new file mode 120000
+index 0000000000..feb122881c
+--- /dev/null
++++ b/meta-application/recipes-hello/hellomake/files
+@@ -0,0 +1 @@
++../files
+\ No newline at end of file
+diff --git a/meta-application/recipes-hello/hellomake/hellomake.bb b/meta-application/recipes-hello/hellomake/hellomake.bb
+new file mode 100644
+index 0000000000..b37ebed3f4
+--- /dev/null
++++ b/meta-application/recipes-hello/hellomake/hellomake.bb
+@@ -0,0 +1,26 @@
++SUMMARY = "Simple Hello World application"
++LICENSE = "MIT"
++LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
++
++#SRC_URI = "file://../ "
++SRC_URI = "file://Makefile \
++           file://include/echo.h \
++           file://source/echo.cpp \
++           file://source/hello.cpp \
++          "
++
++S = "${WORKDIR}"
++
++do_compile() {
++    make
++}
++
++do_install() {
++    install -d ${D}${bindir}
++    install -m 0755 hellomake ${D}${bindir}
++}
++
++# Clean the build
++do_clean() {
++    make clean
++}
