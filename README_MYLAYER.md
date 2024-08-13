@@ -1,3 +1,10 @@
+
+### remove remote
+
+https://dev.to/dance2die/push-git-cloned-repository-to-your-own-on-github-1ili#:~:text=First%2C%20remove%20the%20remote%20repository%20associated%20using%20git,you%20can%20push%2Fpublish%20it%20to%20your%20own%20repository%21
+
+
+
 ### yocto_kernel_practice
 
 
@@ -335,4 +342,32 @@ inherit core-image-minimal
 IMAGE_INSTALL:append = " hellocmake"
 
 
+
+
+./tmp/sysroots-components/core2-64/hellocmake
+./tmp/sysroots-components/core2-64/hellocmake/sysroot-providers/hellocmake
+./tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/rootfs/usr/bin/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/package/usr/src/debug/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/package/usr/bin/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/package/usr/bin/.debug/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/license-destdir/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/build/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/pkgdata/runtime/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/pkgdata/runtime-reverse/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/pkgdata/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/pkgdata-pdata-input/runtime/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/pkgdata-pdata-input/runtime-reverse/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/pkgdata-pdata-input/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/sysroot-destdir/sysroot-providers/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/packages-split/hellocmake-dbg/usr/bin/.debug/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/packages-split/hellocmake-src/usr/src/debug/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/packages-split/hellocmake
+./tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/packages-split/hellocmake/usr/bin/hellocmake
+./tmp/stamps/core2-64-poky-linux/hellocmake
+./tmp/log/cleanlogs/hellocmake
+./tmp/pkgdata/qemux86-64/runtime/hellocmake
+./tmp/pkgdata/qemux86-64/runtime-reverse/hellocmake
+./tmp/pkgdata/qemux86-64/hellocmake
+./tmp/deploy/licenses/hellocmake
 
