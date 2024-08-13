@@ -1,6 +1,45 @@
 ### yocto_kernel_practice
 
 
+
+
+Make sure your Build Host meets the following requirements:
+
+50 Gbytes of free disk space
+Runs a supported Linux distribution (i.e. recent releases of Fedora, openSUSE, CentOS, Debian, or Ubuntu). I use Ubuntu 22.04.1 LTS
+Required Software versions
+Git 1.8.3.1 or greater
+tar 1.28 or greater
+Python 3.6.0 or greater.
+gcc 7.5 or greater.
+GNU make 4.0 or greater
+Note: Build Host is the system used to build images in a Yocto Project Development environment.
+
+Install Host Packages
+You must install essential host packages on your build host.
+
+sudo apt-get install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
+The preceding command will use apt-get, the Advanced Packaging Tool (APT), command-line tool. It is a frontend of the dpkg package manager that is included in the Ubuntu distribution. It will install all the required packages and their dependencies to support all the features of the Yocto project.
+
+Install Poky
+Use the following commands to clone the Poky repository.
+
+git clone git://git.yoctoproject.org/poky
+Then move to the poky directory and take a look at existing branches:
+
+cd poky
+git branch -a
+check out the kirkstone branch based as we will be using the Kirkstone release:
+
+git checkout -t origin/kirkstone -b my-kirkstone
+The above Git checkout command creates a local branch named my-kirkstone. The files available to you in that branch exactly match the repository’s files in the kirkstone release branch.
+
+
+
+qt可參考
+https://github.com/joaocfernandes/Learn-Yocto/blob/master/develop/Recipe-qt5.md
+
+
 ### Creating a new layer for the calculator application project
 
 Create a new layer named meta-*
