@@ -19,7 +19,7 @@ layer                 path                                      priority
 meta                  /media/disk4T/yujen/poky/meta             5
 meta-poky             /media/disk4T/yujen/poky/meta-poky        5
 meta-yocto-bsp        /media/disk4T/yujen/poky/meta-yocto-bsp   5
-meta-application      /media/disk4T/yujen/poky/build/meta-application  6
+meta-application      /media/disk4T/yujen/poky/meta-application  6
 ```
 
 BitBake should've created the following tree (with additional recipe-example):
