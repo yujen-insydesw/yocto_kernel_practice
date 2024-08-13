@@ -243,3 +243,57 @@ int main() {
 }
 
 ```
+
+### 尚未確認的地方
+
+Common targets are:
+    core-image-minimal
+    core-image-full-cmdline
+    core-image-sato
+    core-image-weston
+    meta-toolchain
+    meta-ide-support
+
+
+
+
+/media/disk4T/yujen/poky/build/tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/rootfs/bin/
+
+
+
+
+
+
+/media/disk4T/yujen/poky/build/tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/image/usr/bin/hellocmake
+
+/media/disk4T/yujen/poky/meta-application/conf/layer.conf
+
+/media/disk4T/yujen/poky/meta-application/recipes-hello/hellocmake/hellocmake.bb
+
+cmake install 就夠了 其他沒作用 @@
+
+IMAGE_INSTALL += " hellocmake"
+
+
+
+
+
+直接加沒作用 ... 可能是沒有清cache的關係
+
+/media/disk4T/yujen/poky/meta/recipes-core/images/core-image-minimal.bbappend
+
+IMAGE_INSTALL:append = " hellocmake"
+
+inherit core-image-minimal
+
+
+
+
+加在build有作用
+
+/media/disk4T/yujen/poky$ vim build/conf/local.conf
+
+IMAGE_INSTALL:append = " hellocmake"
+
+
+
