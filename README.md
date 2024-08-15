@@ -371,3 +371,14 @@ IMAGE_INSTALL:append = " hellocmake"
 ./tmp/pkgdata/qemux86-64/hellocmake
 ./tmp/deploy/licenses/hellocmake
 
+
+
+git 操作
+
+git rm --cached submodule_path  # delete reference to submodule HEAD (no trailing slash)
+git rm .gitmodules              # if you have more than one submodules,
+                                # you need to edit this file instead of deleting!
+rm -rf submodule_path/.git      # make sure you have backup!!
+git add --force submodule_path  # will add files instead of commit reference
+                                # --force adds files ignored by .gitignore
+git commit -m "remove submodule"
