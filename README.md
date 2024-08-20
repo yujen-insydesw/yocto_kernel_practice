@@ -202,12 +202,12 @@ bitbake hellofetch
         * <{machine | qemux86_64}-poky-linux>/core-image-minimal/1.0-r0/rootfs/bin/
         * …
     * **core2-64-poky-linux** holds recipes that are **architecture-specific**, recipes that runs only on that architecture. It runs on `qemux86_64` machine and can run on other machines that are compatible with that architecture.
-        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/< app >
-        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/include
-        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/source
-        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/image
-        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/image/usr/include
-        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/image/usr/bin
+        * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/< app >
+        * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/include
+        * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/source
+        * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image
+        * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image/usr/include
+        * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image/usr/bin
 
 ## Some question unsolved
 ```console
