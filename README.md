@@ -1,5 +1,5 @@
 # yocto_kernel_practice
-A practice about how to cook a minimal linux image attached with customized applications. Here, we use Ubuntu 22.? on x86_64 machine.
+A practice about how to cook a minimal linux image attached with customized applications. Here, the build platform use Ubuntu 22.x on x86_64 machine.
 
 ## Make sure the build server meets the following requirements:
 - 50 Gbytes of free disk space
@@ -50,7 +50,12 @@ Common (bitbake) targets are:
     core-image-weston
     meta-toolchain
     meta-ide-support
-``` 
+```
+- `core-image-base`: A console-only image that fully supports the target.
+- `core-image-minimal`: A small image allowing the device to just boot. It has recipe provides an image with the least number of packages to be a bootable image for a given platform (MACHINE) from a stock Yocto Project distribution. It is not necessarily the smallest image that can be created, as many size reductions can be made with kernel changes, etc. The default machine selected for Yocto build is named `qemux86-64`. This selection can be viewed in the file `conf/local.conf`.
+- `core-image-sato`: An image with Sato support, a mobile environment and visual style that works with mobile devices.
+- `core-image-clutter`: An image with support for the OpenGL-based toolkit Clutter
+- `core-image-full-cmdline`: A console-only image with more full-featured system functionality installed.
 
 ## Creating a new layer
 ### create a new layer named meta-*
@@ -130,7 +135,7 @@ meta-application/
 └── recipes-hello
     ├── files
     │   ├── CMakeLists.txt
-    │   ├── files -> ../files
+    │   ├── tarball.tg.gz
     │   ├── include
     │   │   └── echo.h
     │   ├── Makefile
@@ -143,6 +148,11 @@ meta-application/
     ├── hellocmake
     │   ├── files -> ../files
     │   └── hellocmake.bb
+    ├── hellotarball
+    │   ├── files -> ../files
+    │   └── hellotarball.bb
+    ├── hellofetch
+    │   └── hellofetch.bb
     └── hellomake
         ├── files -> ../files
         └── hellomake.bb
@@ -158,27 +168,71 @@ bitbake core-image-minimal
 bitbake hello
 bitbake hellomake
 bitbake hellocmake
-
-# out put to image:
-{poky}/build/tmp/work/core2-64-poky-linux/hellocmake/1.0-r0/image/usr/bin/hellocmake
-
-# where is core image:
-{poky}/build/tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/rootfs/bin/
-{poky}/build/tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/rootfs/bin/
+bitbake hellotarball
+bitbake hellofetch
 ```
 
+## Clarification of {poky}/build/tmp directory:
+- **abi_version**
+- **buildstats** It is a detailed list of each recipe what "do_" actions has been executed with. including execution time, status, etc.
+- **cache** These are the components has been built and available for reuse.
+- **deploy** This is the place holder for the produced images as well as packages as well as the license information.
+    * **images**
+        * qemux86-64
+        * …
+    * **licenses**
+    * **rpm**
+        * qemux86_64
+        * core2_64 
+        * noarch
+- **hosttools** This the storage of the host tools the build system depends on.
+- **log** This is the place holder for the cooker build logs.
+- **qa.log** \
+- **pkgdata** This place holds the lists of each package (RPM or DEB or IPKG, etc) content.
+- **saved_tmpdir**
+- **sstate-control** It is a list of the files produced by each particular recipe "do_" action.
+- **stamps** A hash-stamp of each recipe each "do_" action.
+- **sysroots-components** It is the list of each recipe artifacts to be placed to the target rootfs or to the build rootfs in case of "native" (i.e. executed on the build host computer) recipes.
+- **sysroots-uninative** This is the toolchain shared libraries portion of the build rootfs.
+- **work-shared**
+- **work** It contains a set of recipe build result artifacts including recipe dependencies.
+    * **all-poky-linux** holds the recipes that are architecture-independent, like scripts.
+    * **x86_64-linux** used to hold recipes that are built for the build host that are used to build other recipes for the target machine. For more info check this [link](https://wiki.yoctoproject.org/wiki/Technical_FAQ#What_does_.22native.22_mean.3F)
+    * **qemux86_64-poky-linux** holds recipes that are **machine-specific** like `core-image-minimal` as it is an image containing packages/boot/kernel binaries/configuration specific only to `qemux86_64`.
+        * <{machine | qemux86_64}-poky-linux>/core-image-minimal/1.0-r0/rootfs/bin/
+        * …
+    * **core2-64-poky-linux** holds recipes that are **architecture-specific**, recipes that runs only on that architecture. It runs on `qemux86_64` machine and can run on other machines that are compatible with that architecture.
+        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/< app >
+        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/include
+        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/source
+        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/image
+        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/image/usr/include
+        * <architecture | core2-64-poky-linux>**/< app >/<version | 1.0-r0>/image/usr/bin
+
 ## Some question unsolved
-### not necessary to install to image ?
-meta-application/recipes-hello/hellocmake/hellocmake.bb
+```console
+## is it necessary of the following ?
+# meta-application/recipes-hello/hellocmake/hellocmake.bb
 IMAGE_INSTALL += " hellocmake"
-### not work to install to core image
-meta/recipes-core/images/core-image-minimal.bbappend
+## is it necessary to install to core image ?
+# meta/recipes-core/images/core-image-minimal.bbappend
 IMAGE_INSTALL:append = " hellocmake"
 inherit core-image-minimal
-### it work (build/conf/local.conf)
-build/conf/local.conf
+# build/conf/local.conf
 IMAGE_INSTALL:append = " hellocmake"
+```
 
-## Future question unsolved
+## Run QEMU
+```console
+# "runqemu" contains in yocto porject. Running runqemu starts the VM and executes it, but it does not install or modify software on your host OS.
+# "nographic" option runs QEMU in a mode that doesn’t use graphical output.
+# run
+sudo runqemu qemux86-64 nographic
+
+# shutdown
+shutdown -h now
+```
+
+## To be continue ...
 ### install qt
 https://github.com/joaocfernandes/Learn-Yocto/blob/master/develop/Recipe-qt5.md
