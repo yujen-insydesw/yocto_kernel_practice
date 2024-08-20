@@ -135,7 +135,7 @@ meta-application/
 └── recipes-hello
     ├── files
     │   ├── CMakeLists.txt
-    │   ├── tarball.tg.gz
+    │   ├── tarball.tar.gz
     │   ├── include
     │   │   └── echo.h
     │   ├── Makefile
