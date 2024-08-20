@@ -209,7 +209,7 @@ bitbake hellofetch
         * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image/usr/include
         * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image/usr/bin
 
-## Run QEMU
+## Run image qemux86_64
 ```console
 # "runqemu" contains in yocto porject. Running runqemu starts the VM and executes it, but it does not install or modify software on your host OS.
 # "nographic" option runs QEMU in a mode that doesn’t use graphical output.
