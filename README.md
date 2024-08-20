@@ -209,6 +209,17 @@ bitbake hellofetch
         * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image/usr/include
         * <architecture | core2-64-poky-linux>/< app >/<version | 1.0-r0>/image/usr/bin
 
+## Run QEMU
+```console
+# "runqemu" contains in yocto porject. Running runqemu starts the VM and executes it, but it does not install or modify software on your host OS.
+# "nographic" option runs QEMU in a mode that doesn’t use graphical output.
+# run
+sudo runqemu qemux86-64 nographic
+
+# shutdown
+shutdown -h now
+```
+
 ## Some question unsolved
 ```console
 ## is it necessary of the following ?
@@ -220,17 +231,6 @@ IMAGE_INSTALL:append = " hellocmake"
 inherit core-image-minimal
 # build/conf/local.conf
 IMAGE_INSTALL:append = " hellocmake"
-```
-
-## Run QEMU
-```console
-# "runqemu" contains in yocto porject. Running runqemu starts the VM and executes it, but it does not install or modify software on your host OS.
-# "nographic" option runs QEMU in a mode that doesn’t use graphical output.
-# run
-sudo runqemu qemux86-64 nographic
-
-# shutdown
-shutdown -h now
 ```
 
 ## To be continue ...
