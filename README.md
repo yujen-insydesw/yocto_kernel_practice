@@ -222,35 +222,37 @@ shutdown -h now
 
 ## Some question unsolved
 ```console
-## bb
-# not work
-# meta-*/recipes-core/images/application.bb
-# meta-*/images/application.bb
-# meta-*/recipes-hello/images/application.bbappend
-require recipes-core/images/application.bb
-IMAGE_INSTALL += "hellocmake"
-
-## bbappend
-# not work
-# meta-*/recipes-core/images/core-image-minimal.bbappend
-# meta-*/images/core-image-minimal.bbappend
-# meta-*/recipes-hello/images/core-image-minimal.bbappend
-IMAGE_INSTALL += "hellocmake"
-inherit core-image-minimal
-
 ## local.conf
-# the only workable way
 # build/conf/local.conf
 IMAGE_INSTALL:append = " hellocmake"
 # If only want to aplly to specific image
 IMAGE_INSTALL:append:pn-core-image-minimal = " hellocmake"
 # Must use _append instead of the += operator (recommended on some resources available online) if you want to avoid ordering issues. As shown in its simplest use, IMAGE_INSTALL_append affects all images.
 
+## bb (a new customized image)
+# meta-application/recipes-application/images/application-core-image-minimal.bb
+require recipes-core/images/application.bb
+IMAGE_INSTALL += "hellocmake ..."
+# bibake application-core-image-minimal
+
+## bbappend
+# meta-application/recipes-application/images/core-image-minimal.bbappend
+IMAGE_INSTALL += "hellocmake"
+# bibake core-image-minimal
+
 ## reference
 https://kickstartembedded.com/2022/02/28/yocto-part-9-customising-images-by-adding-your-recipes/
+## reference
 https://docs.yoctoproject.org/dev/dev-manual/customizing-images.html
 ```
 
 ## To be continue ...
+
 ### install qt
 https://github.com/joaocfernandes/Learn-Yocto/blob/master/develop/Recipe-qt5.md
+
+### how to build image for Raspberry Pi
+https://kickstartembedded.com/2021/12/22/yocto-part-4-building-a-basic-image-for-raspberry-pi/
+
+### about receipes and version and checksum
+https://kickstartembedded.com/2022/01/21/yocto-part-6-understanding-and-creating-your-first-custom-recipe/ 
