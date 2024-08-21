@@ -222,15 +222,33 @@ shutdown -h now
 
 ## Some question unsolved
 ```console
-## is it necessary of the following ?
-# meta-application/recipes-hello/hellocmake/hellocmake.bb
-IMAGE_INSTALL += " hellocmake"
-## is it necessary to install to core image ?
-# meta/recipes-core/images/core-image-minimal.bbappend
-IMAGE_INSTALL:append = " hellocmake"
+## bb
+# not work
+# meta-*/recipes-core/images/application.bb
+# meta-*/images/application.bb
+# meta-*/recipes-hello/images/application.bbappend
+require recipes-core/images/application.bb
+IMAGE_INSTALL += "hellocmake"
+
+## bbappend
+# not work
+# meta-*/recipes-core/images/core-image-minimal.bbappend
+# meta-*/images/core-image-minimal.bbappend
+# meta-*/recipes-hello/images/core-image-minimal.bbappend
+IMAGE_INSTALL += "hellocmake"
 inherit core-image-minimal
+
+## local.conf
+# the only workable way
 # build/conf/local.conf
 IMAGE_INSTALL:append = " hellocmake"
+# If only want to aplly to specific image
+IMAGE_INSTALL:append:pn-core-image-minimal = " hellocmake"
+# Must use _append instead of the += operator (recommended on some resources available online) if you want to avoid ordering issues. As shown in its simplest use, IMAGE_INSTALL_append affects all images.
+
+## reference
+https://kickstartembedded.com/2022/02/28/yocto-part-9-customising-images-by-adding-your-recipes/
+https://docs.yoctoproject.org/dev/dev-manual/customizing-images.html
 ```
 
 ## To be continue ...
