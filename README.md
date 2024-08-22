@@ -226,19 +226,24 @@ shutdown -h now
 # build/conf/local.conf
 IMAGE_INSTALL:append = " hellocmake"
 # If only want to aplly to specific image
-IMAGE_INSTALL:append:pn-core-image-minimal = " hellocmake"
+# IMAGE_INSTALL:append:pn-core-image-minimal = " hellocmake"
+# build
+bibake core-image-minimal
+
 # Must use _append instead of the += operator (recommended on some resources available online) if you want to avoid ordering issues. As shown in its simplest use, IMAGE_INSTALL_append affects all images.
 
 ## bb (a new customized image)
 # meta-application/recipes-application/images/application-core-image-minimal.bb
 require recipes-core/images/application.bb
 IMAGE_INSTALL += "hellocmake ..."
-# bibake application-core-image-minimal
+# build
+bibake application-core-image-minimal
 
 ## bbappend
 # meta-application/recipes-application/images/core-image-minimal.bbappend
 IMAGE_INSTALL += "hellocmake"
-# bibake core-image-minimal
+# build
+bibake core-image-minimal
 
 ## reference
 https://kickstartembedded.com/2022/02/28/yocto-part-9-customising-images-by-adding-your-recipes/
