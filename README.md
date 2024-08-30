@@ -220,7 +220,8 @@ sudo runqemu qemux86-64 nographic
 shutdown -h now
 ```
 
-## Some question unsolved
+## How to install application to image
+Three normal way:
 ```console
 ## local.conf
 # build/conf/local.conf
@@ -250,6 +251,17 @@ https://kickstartembedded.com/2022/02/28/yocto-part-9-customising-images-by-addi
 ## reference
 https://docs.yoctoproject.org/dev/dev-manual/customizing-images.html
 ```
+Advance with classes:
+1. **Inheritance**:
+    - To use a **`.bbclass`** file, a recipe simply needs to inherit the class. In most cases, inheriting the class is enough to enable its features.
+    - Recipes can inherit multiple classes, allowing them to combine functionalities from different **`.bbclass`** files.
+2. **Class Locations**:
+    - **`.bbclass`** files are identified by their extension and are usually placed in specific subdirectories beneath the **`meta*/`** directory in the source directory:
+        - **`classes-recipe/`**: Classes intended to be inherited by recipes individually.
+        - **`classes-global/`**: Classes intended to be inherited globally.
+        - **`classes/`**: Classes whose usage context is not clearly defined.
+For instance, **cmake.bbclass** have already defined process for a noremal cmake build. When receipe's .bb file need to handle normal cmake build, we can use **inherit cmake** to use it.
+For instance, **.bbclass** can also add **IMAGE_INSTALL:append** with the components that we want to install, and it can it inherited and shared accross all the receipes within the same directory.
 
 ## To be continue ...
 
